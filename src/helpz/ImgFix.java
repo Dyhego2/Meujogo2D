@@ -68,6 +68,7 @@ public class ImgFix {
         BufferedImage[] arr = new BufferedImage[imgs.length];
 
         for (int i = 0; i < imgs.length; i++) {
+
             BufferedImage newImg = new BufferedImage(w, h, imgs[0].getType());
             Graphics2D g2d = newImg.createGraphics();
 

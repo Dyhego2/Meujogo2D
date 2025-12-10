@@ -1,10 +1,13 @@
 package enemies;
 
 import java.awt.Rectangle;
+
+import managers.EnemyManager;
+
 import static helpz.Constants.Direction.*;
 
 public abstract class Enemy {
-
+    protected EnemyManager enemyManager;
     protected float x, y;
     protected Rectangle bounds;
     protected int health;
@@ -16,11 +19,12 @@ public abstract class Enemy {
     protected int slowTickLimit = 120;
     protected int slowTick = slowTickLimit;
 
-    public Enemy(float x, float y, int ID, int enemyType) {
+    public Enemy(float x, float y, int ID, int enemyType, EnemyManager enemyManager) {
         this.x = x;
         this.y = y;
         this.ID = ID;
         this.enemyType = enemyType;
+        this.enemyManager = enemyManager;
         bounds = new Rectangle((int) x, (int) y, 32, 32);
         lastDir = -1;
         setStartHealth();
@@ -33,8 +37,17 @@ public abstract class Enemy {
 
     public void hurt(int dmg) {
         this.health -= dmg;
-        if (health <= 0)
+        if (health <= 0) {
             alive = false;
+            enemyManager.rewardPlayer(enemyType);
+        }
+
+    }
+
+    public void kill() {
+        // Is for killing enemy, when it reaches the end.
+        alive = false;
+        health = 0;
     }
 
     public void slow() {

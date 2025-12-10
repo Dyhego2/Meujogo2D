@@ -6,11 +6,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import enemies.Bat;
+import enemies.Ovni;
 import enemies.Enemy;
-import enemies.Knight;
-import enemies.Orc;
-import enemies.Wolf;
+import enemies.Alien;
+import enemies.Slime;
+import enemies.Lizard;
 import helpz.LoadSave;
 import objects.PathPoint;
 import scenes.Playing;
@@ -34,12 +34,6 @@ public class EnemyManager {
         this.end = end;
 
         loadEffectImg();
-
-        addEnemy(ORC);
-        addEnemy(BAT);
-        addEnemy(KNIGHT);
-        addEnemy(WOLF);
-
         loadEnemyImgs();
     }
 
@@ -55,6 +49,7 @@ public class EnemyManager {
     }
 
     public void update() {
+
         for (Enemy e : enemies)
             if (e.isAlive())
                 updateEnemyMove(e);
@@ -71,8 +66,8 @@ public class EnemyManager {
         if (getTileType(newX, newY) == ROAD_TILE) {
             e.move(GetSpeed(e.getEnemyType()), e.getLastDir());
         } else if (isAtEnd(e)) {
-//			System.out.println("Lives Lost!");
-
+            e.kill();
+            playing.removeOneLife();
         } else {
             setNewDirectionAndMove(e);
         }
@@ -151,23 +146,27 @@ public class EnemyManager {
         return 0;
     }
 
+    public void spawnEnemy(int nextEnemy) {
+        addEnemy(nextEnemy);
+    }
+
     public void addEnemy(int enemyType) {
 
         int x = start.getxCord() * 32;
         int y = start.getyCord() * 32;
 
         switch (enemyType) {
-            case ORC:
-                enemies.add(new Orc(x, y, 0));
+            case Slime:
+                enemies.add(new Slime(x, y, 0, this));
                 break;
-            case BAT:
-                enemies.add(new Bat(x, y, 0));
+            case Ovni:
+                enemies.add(new Ovni(x, y, 0, this));
                 break;
-            case KNIGHT:
-                enemies.add(new Knight(x, y, 0));
+            case Alien:
+                enemies.add(new Alien(x, y, 0, this));
                 break;
-            case WOLF:
-                enemies.add(new Wolf(x, y, 0));
+            case Lizard:
+                enemies.add(new Lizard(x, y, 0, this));
                 break;
         }
 
@@ -205,6 +204,23 @@ public class EnemyManager {
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
+    }
+
+    public int getAmountOfAliveEnemies() {
+        int size = 0;
+        for (Enemy e : enemies)
+            if (e.isAlive())
+                size++;
+
+        return size;
+    }
+
+    public void rewardPlayer(int enemyType) {
+        playing.rewardPlayer(enemyType);
+    }
+
+    public void reset() {
+        enemies.clear();
     }
 
 }

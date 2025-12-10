@@ -25,6 +25,18 @@ public class Constants {
         public static final int ARCHER = 1;
         public static final int WIZARD = 2;
 
+        public static int GetTowerCost(int towerType) {
+            switch (towerType) {
+                case CANNON:
+                    return 65;
+                case ARCHER:
+                    return 35;
+                case WIZARD:
+                    return 50;
+            }
+            return 0;
+        }
+
         public static String GetName(int towerType) {
             switch (towerType) {
                 case CANNON:
@@ -53,9 +65,9 @@ public class Constants {
         public static float GetDefaultRange(int towerType) {
             switch (towerType) {
                 case CANNON:
-                    return 100;
+                    return 75;
                 case ARCHER:
-                    return 100;
+                    return 120;
                 case WIZARD:
                     return 100;
             }
@@ -68,9 +80,9 @@ public class Constants {
                 case CANNON:
                     return 120;
                 case ARCHER:
-                    return 25;
+                    return 35;
                 case WIZARD:
-                    return 40;
+                    return 50;
             }
 
             return 0;
@@ -86,35 +98,49 @@ public class Constants {
 
     public static class Enemies {
 
-        public static final int ORC = 0;
-        public static final int BAT = 1;
-        public static final int KNIGHT = 2;
-        public static final int WOLF = 3;
+        public static final int Slime = 0;
+        public static final int Ovni = 1;
+        public static final int Alien = 2;
+        public static final int Lizard = 3;
+
+        public static int GetReward(int enemyType) {
+            switch (enemyType) {
+                case Slime:
+                    return 5;
+                case Ovni:
+                    return 5;
+                case Alien:
+                    return 25;
+                case Lizard:
+                    return 10;
+            }
+            return 0;
+        }
 
         public static float GetSpeed(int enemyType) {
             switch (enemyType) {
-                case ORC:
+                case Slime:
                     return 0.5f;
-                case BAT:
-                    return 0.65f;
-                case KNIGHT:
-                    return 0.3f;
-                case WOLF:
-                    return 0.75f;
+                case Ovni:
+                    return 0.85f;
+                case Alien:
+                    return 0.45f;
+                case Lizard:
+                    return 0.95f;
             }
             return 0;
         }
 
         public static int GetStartHealth(int enemyType) {
             switch (enemyType) {
-                case ORC:
+                case Slime:
+                    return 65;
+                case Ovni:
+                    return 120;
+                case Alien:
+                    return 400;
+                case Lizard:
                     return 100;
-                case BAT:
-                    return 60;
-                case KNIGHT:
-                    return 250;
-                case WOLF:
-                    return 85;
             }
             return 0;
         }
